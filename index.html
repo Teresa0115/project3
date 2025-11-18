@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新店狗狗檔案館｜收容所狗狗資料與故事</title>
+  <meta name="description" content="新店狗狗檔案館：以收容所狗狗為主題的個人網站骨架，用來介紹狗狗、展示技能、作品集與聯絡方式。">
+
+  <style>
+    /* =========================
+       全域設定（開發者 CSS 插槽）
+       - 之後若使用 Section SDD 產生新設計，可直接覆蓋或刪除本區設定
+       ========================= */
+
+    :root {
+      --color-bg: #050814;
+      --color-bg-elevated: #0b1020;
+      --color-border-subtle: #1e2742;
+      --color-primary: #2aa5c9;
+      --color-primary-soft: rgba(42, 165, 201, 0.12);
+      --color-primary-strong: #43c4e8;
+      --color-text-main: #f5f7ff;
+      --color-text-muted: #a3afcf;
+      --color-text-soft: #7d89aa;
+      --color-nav-bg: rgba(5, 8, 20, 0.96);
+      --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.45);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --header-height: 64px;
+      --transition-fast: 0.18s ease-out;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background: radial-gradient(circle at top, #141c35 0, #050814 55%);
+      color: var(--color-text-main);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: var(--color-primary-strong);
+    }
+
+    main {
+      padding-top: var(--header-height);
+    }
+
+    .container {
+      width: min(1120px, 100% - 2.5rem);
+      margin-inline: auto;
+    }
+
+    .section {
+      padding: 3.5rem 0;
+      scroll-margin-top: calc(var(--header-height) + 16px);
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin: 0 0 0.75rem;
+    }
+
+    .section-heading {
+      font-size: 1.9rem;
+      margin: 0 0 1.5rem;
+      color: var(--color-text-main);
+    }
+
+    .section-intro {
+      max-width: 680px;
+      font-size: 0.98rem;
+      color: var(--color-text-soft);
+      margin: 0 0 2.5rem;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #0c1020, #050814);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 1.5rem 1.25rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.2rem 0.75rem;
+      border-radius: 999px;
+      background-color: var(--color-primary-soft);
+      color: var(--color-primary-strong);
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background-color: var(--color-primary-strong);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      padding: 0.6rem 1.4rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        color var(--transition-fast);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-strong));
+      color: #020309;
+      box-shadow: 0 12px 25px rgba(10, 163, 212, 0.45);
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(10, 163, 212, 0.6);
+    }
+
+    .btn-outline {
+      border-color: var(--color-border-subtle);
+      background-color: transparent;
+      color: var(--color-text-main);
+    }
+
+    .btn-outline:hover,
+    .btn-outline:focus-visible {
+      border-color: var(--color-primary);
+      background-color: rgba(15, 26, 53, 0.95);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      padding: 0.15rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid var(--color-border-subtle);
+      color: var(--color-text-muted);
+      background: rgba(14, 22, 48, 0.8);
+    }
+
+    .muted-note {
+      font-size: 0.86rem;
+      color: var(--color-text-soft);
+      margin-top: 1rem;
+    }
+
+    .muted-note strong {
+      color: var(--color-primary-strong);
+      font-weight: 600;
+    }
+
+    /* =========================
+       導覽列（Nav）
+       ========================= */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: var(--color-nav-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(51, 65, 105, 0.8);
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+    }
+
+    .logo {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-main);
+      white-space: nowrap;
+    }
+
+    .logo-sub {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--color-text-muted);
+      letter-spacing: 0.12em;
+      margin-top: 0.05rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.88rem;
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 0.3rem 0.4rem;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-primary-strong));
+      transition: width var(--transition-fast);
+      border-radius: 999px;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      color: var(--color-text-main);
+    }
+
+    .nav-link:hover::after,
+    .nav-link:focus-visible::after {
+      width: 100%;
+    }
+
+    /* =========================
+       Hero 區（開發者 HTML/CSS 插槽）
+       ========================= */
+
+    .section-hero {
+      padding-top: 3.75rem;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hero-main {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+
+    .hero-highlight {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--color-primary-strong);
+      margin: 0.4rem 0 0.2rem;
+    }
+
+    .hero-description {
+      font-size: 0.98rem;
+      color: var(--color-text-soft);
+      margin: 0;
+      max-width: 640px;
+    }
+
+    .hero-helper-text {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      margin-top: 1.2rem;
+      padding: 0.75rem 0.9rem;
+      border-radius: var(--radius-md);
+      border: 1px dashed rgba(129, 140, 248, 0.5);
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.16), transparent 55%);
+    }
+
+    .hero-image-wrapper {
+      display: none;
+    }
+
+    .hero-image-inner {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid rgba(148, 163, 235, 0.4);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+      background: radial-gradient(circle at top, rgba(82, 197, 255, 0.22), #020617);
+    }
+
+    .hero-image-inner img {
+      mix-blend-mode: lighten;
+      opacity: 0.9;
+    }
+
+    .hero-image-badge {
+      position: absolute;
+      left: 1.1rem;
+      bottom: 1.1rem;
+      padding: 0.55rem 0.85rem;
+      border-radius: 999px;
+      backdrop-filter: blur(15px);
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 235, 0.7);
+      font-size: 0.72rem;
+      color: var(--color-text-main);
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .hero-image-badge span:nth-child(2) {
+      color: var(--color-primary-strong);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* =========================
+       About 區
+       ========================= */
+
+    .section-about .about-grid {
+      display: grid;
+      gap: 1.75rem;
+    }
+
+    .about-text {
+      font-size: 0.95rem;
+      color: var(--color-text-soft);
+    }
+
+    .placeholder-note {
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1px dashed rgba(148, 163, 235, 0.6);
+      background: rgba(15, 23, 42, 0.7);
+      font-size: 0.86rem;
+      color: var(--color-text-muted);
+    }
+
+    .placeholder-note strong {
+      color: var(--color-primary-strong);
+    }
+
+    /* =========================
+       Skills 區
+       ========================= */
+
+    .skills-layout {
+      display: grid;
+      gap: 1.75rem;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skills-list .tag {
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .skills-columns {
+      display: grid;
+      gap: 1.25rem;
+      font-size: 0.9rem;
+      color: var(--color-text-soft);
+    }
+
+    .skills-column-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    /* =========================
+       Projects 區
+       ========================= */
+
+    .projects-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .project-media {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 235, 0.45);
+      background: radial-gradient(circle at top, rgba(59, 130, 246, 0.18), #020617);
+    }
+
+    .project-title {
+      font-size: 1rem;
+      margin: 0 0 0.2rem;
+      color: var(--color-text-main);
+    }
+
+    .project-meta {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      margin: 0 0 0.6rem;
+    }
+
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--color-text-soft);
+      margin: 0;
+    }
+
+    .project-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.9rem;
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    /* =========================
+       Contact 區
+       ========================= */
+
+    .contact-layout {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .contact-lines {
+      font-size: 0.92rem;
+      color: var(--color-text-soft);
+    }
+
+    .contact-lines p {
+      margin: 0 0 0.5rem;
+    }
+
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.75rem 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+    }
+
+    .contact-list strong {
+      color: var(--color-text-main);
+      font-weight: 500;
+    }
+
+    .contact-helper {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      margin-top: 1rem;
+      padding: 0.75rem 0.9rem;
+      border-radius: var(--radius-md);
+      border: 1px dashed rgba(129, 140, 248, 0.5);
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.16), transparent 55%);
+    }
+
+    /* =========================
+       版權區 Footer
+       ========================= */
+
+    .site-footer {
+      padding: 1.75rem 0 2.25rem;
+      border-top: 1px solid rgba(30, 64, 175, 0.7);
+      margin-top: 2rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .footer-link {
+      font-size: 0.78rem;
+      color: var(--color-text-soft);
+    }
+
+    .footer-link:hover,
+    .footer-link:focus-visible {
+      color: var(--color-primary-strong);
+    }
+
+    /* =========================
+       RWD：中型螢幕（>= 768px）
+       ========================= */
+
+    @media (min-width: 768px) {
+      .nav {
+        gap: 2rem;
+      }
+
+      .nav-links {
+        gap: 1.1rem;
+        font-size: 0.9rem;
+      }
+
+      .section {
+        padding: 4rem 0;
+      }
+
+      .section-hero {
+        padding-top: 4.5rem;
+      }
+
+      .hero-layout {
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+        gap: 3rem;
+      }
+
+      .hero-title {
+        font-size: 2.4rem;
+      }
+
+      .hero-highlight {
+        font-size: 1.6rem;
+      }
+
+      .hero-image-wrapper {
+        display: block;
+      }
+
+      .hero-image-inner {
+        padding: 0.3rem;
+      }
+
+      .section-about .about-grid {
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+        align-items: flex-start;
+      }
+
+      .skills-layout {
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+      }
+
+      .skills-columns {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .projects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .contact-layout {
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      }
+
+      .footer-inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    /* =========================
+       RWD：大型螢幕（>= 1200px）
+       ========================= */
+
+    @media (min-width: 1200px) {
+      .section {
+        padding: 4.5rem 0;
+      }
+
+      .projects-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- =========================
+       導覽列 Nav
+       ========================= -->
+  <header class="site-header">
+    <div class="container nav">
+      <div class="logo">
+        新店狗狗檔案館
+        <span class="logo-sub">Xindian Shelter · Dog Profiles</span>
+      </div>
+
+      <nav class="nav-links" aria-label="主要導覽">
+        <a class="nav-link" href="#hero">首頁</a>
+        <a class="nav-link" href="#about">關於我</a>
+        <a class="nav-link" href="#skills">技能</a>
+        <a class="nav-link" href="#projects">作品集</a>
+        <a class="nav-link" href="#contact">聯絡我</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ========================
+         Hero 區（占位版本）
+         說明給開發者：
+         1. 這整個 section 是「未來可被完全覆蓋」的區塊。
+         2. 之後用 Section SDD 產生新的 Hero 版面與文案時，
+            直接複製新的 <section id="hero"> ... </section>，
+            完整取代本段即可。
+         ======================== -->
+    <section id="hero" class="section section-hero">
+      <div class="container">
+        <div class="hero-layout">
+          <div class="hero-main">
+            <span class="pill">
+              <span class="pill-dot"></span>
+              新店收容所狗狗主題個人網站骨架
+            </span>
+            <h1 class="hero-title">把收容所狗狗的故事，整理成看得懂的「工程師作品集」</h1>
+            <p class="hero-highlight">這裡未來會是你的主視覺 Hero 區</p>
+            <p class="hero-description">
+              目前這裡是占位文字，用來示意未來的版面結構。之後可以放上一句話自我介紹、你在收容所照顧狗狗／整理資料的核心角色（例如「狗狗資料前端工程師」、「志工紀錄者」），以及一兩句說明你想怎麼被認識。
+            </p>
+            <p class="hero-description">
+              Hero 區也很適合放一個清楚的行動呼籲（CTA），例如「瀏覽狗狗作品集」、「查看技能說明」、「下載履歷」或「聯絡我合作收容所專案」。
+            </p>
+
+            <div class="btn-row">
+              <a class="btn btn-primary" href="#projects">瀏覽狗狗作品集占位</a>
+              <a class="btn btn-outline" href="#about">看看關於我占位區</a>
+            </div>
+
+            <p class="hero-helper-text">
+              開發者提示：<br>
+              <strong>之後會用 Section SDD 的 Prompt 產生正式 Hero 文案與版面，再把新的
+                <code>&lt;section id="hero" ...&gt;...&lt;/section&gt;</code> 整段貼回來，完全取代這一區。</strong>
+            </p>
+          </div>
+
+          <aside class="hero-image-wrapper" aria-label="收容所狗狗示意圖">
+            <div class="hero-image-inner">
+              <!-- Unsplash 圖片占位，之後可自由更換 -->
+              <img
+                src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=1200&q=80"
+                alt="在收容所等待家的狗狗示意照片">
+              <div class="hero-image-badge">
+                <span>Unsplash 圖片占位 · 可替換</span>
+                <span>未來可改成專案實際狗狗照片</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================
+         About 區（占位版本）
+         ======================== -->
+    <section id="about" class="section section-about">
+      <div class="container">
+        <header>
+          <p class="section-title">About</p>
+          <h2 class="section-heading">關於我（與這個新店狗狗網站）</h2>
+          <p class="section-intro">
+            這個區塊目前是一個「簡化版的 About 區占位內容」，主要目的是幫你保留版面結構與說明文字，方便未來直接整段替換。
+          </p>
+        </header>
+
+        <div class="card about-grid">
+          <div class="about-text">
+            <p>
+              這裡可以放：你和新店收容所的連結、你為什麼想整理狗狗資料、你在網站與實務上扮演的角色（例如前端工程師、志工、攝影記錄者、企劃等）。
+            </p>
+            <p>
+              也可以描述你對這個專案的目標：讓更多人看懂狗狗狀態、讓領養人快速理解性格特質、或透過好的資訊架構和 UI/UX，讓每一隻狗狗都被看見。
+            </p>
+          </div>
+
+          <div class="placeholder-note">
+            <strong>開發者操作說明：</strong><br>
+            ● 未來請使用「Section SDD」專用 Prompt，為 About 區產生完整的新
+            <code>&lt;section id="about" ...&gt;...&lt;/section&gt;</code>。<br>
+            ● 產生完成後，直接把新的 section 程式碼「整段」貼回來，覆蓋本區塊即可。<br>
+            ● 不需要逐段修改，占位區的存在只是讓整體布局在第一版就長得完整、好閱讀。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================
+         Skills 區（占位版本）
+         ======================== -->
+    <section id="skills" class="section section-skills">
+      <div class="container">
+        <header>
+          <p class="section-title">Skills</p>
+          <h2 class="section-heading">技能與專長（收容所狗狗＋前端向）</h2>
+          <p class="section-intro">
+            這裡未來可以同時呈現「前端工程技能」與「收容所實務技能」，例如：整理狗狗資料、與志工／收容所協作、資訊可視化、資料表單設計等。現在只是先用占位內容保留結構。
+          </p>
+        </header>
+
+        <div class="card skills-layout">
+          <div>
+            <h3 class="skills-column-title">技能標籤占位示意</h3>
+            <p class="about-text">
+              下方是幾個示意用的技能 tag，實際上可以替換成你想強調的技術與經驗（例如「RWD 前端」、「可讀性高的狗狗履歷」、「表單設計」、「資料整理流程」等）。
+            </p>
+            <div class="skills-list">
+              <span class="tag">前端版面切版（占位）</span>
+              <span class="tag">RWD 手機優先設計（占位）</span>
+              <span class="tag">收容所狗狗資料整理（占位）</span>
+              <span class="tag">作品集網站架構（占位）</span>
+              <span class="tag">易懂的狗狗介紹卡片（占位）</span>
+              <span class="tag">與志工／收容所協作（占位）</span>
+            </div>
+          </div>
+
+          <div class="skills-columns">
+            <div>
+              <h3 class="skills-column-title">技術向技能（示意）</h3>
+              <p>
+                這裡可以列出你熟悉的前端技術，例如 HTML、CSS、RWD、無 JS 限制下的互動體驗設計等。也可以描述你如何把這些技能用在「讓每一隻狗狗資訊清楚又好讀」的場景。
+              </p>
+            </div>
+            <div>
+              <h3 class="skills-column-title">收容所實務向技能（示意）</h3>
+              <p>
+                可以放和新店收容所相關的實際能力：陪伴狗狗、觀察性格、幫忙拍照與撰寫認養文、與收容所人員溝通需求等。這些都可以當成你履歷中的一部分專業。
+              </p>
+            </div>
+          </div>
+
+          <p class="muted-note">
+            <strong>未來替換方式：</strong> 使用 Section SDD 為 Skills 區產生新的整段 section，
+            包含你真正的技能分類與版面，然後將新的
+            <code>&lt;section id="skills" ...&gt;...&lt;/section&gt;</code> 完整貼回來覆蓋即可。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================
+         Projects 區（占位版本）
+         ======================== -->
+    <section id="projects" class="section section-projects">
+      <div class="container">
+        <header>
+          <p class="section-title">Projects</p>
+          <h2 class="section-heading">作品集：狗狗資料頁與收容所相關專案（占位）</h2>
+          <p class="section-intro">
+            這裡將來可以展示「每一隻狗狗的資料頁」、「你為收容所做的網頁或表單」、「認養活動頁面」、「教學或紀錄型內容」等。現在先用幾張示意卡片保留結構。
+          </p>
+        </header>
+
+        <div class="projects-grid">
+          <!-- Project Card 1 -->
+          <article class="card project-card">
+            <div class="project-media">
+              <!-- Unsplash 圖片占位，之後可以改成實際專案截圖 -->
+              <img
+                src="https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?auto=format&fit=crop&w=1200&q=80"
+                alt="狗狗在室內看鏡頭的照片，占位用作品縮圖">
+            </div>
+            <div>
+              <h3 class="project-title">作品卡片占位：單隻狗狗資料頁</h3>
+              <p class="project-meta">Project Slot · 專案型態與年份之後可自訂</p>
+              <p class="project-desc">
+                這裡未來可以簡短描述這個作品：例如如何設計一張「狗狗個人履歷卡」，包含照片、年齡、性格標籤、與收容所相關備註等，讓潛在認養人一眼看懂。
+              </p>
+              <div class="project-footer">
+                <span>之後可以放 Demo 連結或 GitHub</span>
+                <span class="tag">占位 · 可刪</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project Card 2 -->
+          <article class="card project-card">
+            <div class="project-media">
+              <img
+                src="https://images.unsplash.com/photo-1525253013412-55c1a69a5738?auto=format&fit=crop&w=1200&q=80"
+                alt="多隻狗狗在戶外的照片，占位用作品縮圖">
+            </div>
+            <div>
+              <h3 class="project-title">作品卡片占位：認養活動或收容所專題頁</h3>
+              <p class="project-meta">Project Slot · 活動／專題頁示意</p>
+              <p class="project-desc">
+                可以介紹你如何為一次送養會、收容所活動或一個主題（例如「黑狗專案」）設計網頁版面，讓活動資訊、時間地點、參與狗狗名單都一目了然。
+              </p>
+              <div class="project-footer">
+                <span>可以放「查看活動回顧」之類按鈕</span>
+                <span class="tag">占位 · 可刪</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project Card 3 -->
+          <article class="card project-card">
+            <div class="project-media">
+              <img
+                src="https://images.unsplash.com/photo-1619983081563-430f63602796?auto=format&fit=crop&w=1200&q=80"
+                alt="人在筆電前與狗狗相處的照片，占位用作品縮圖">
+            </div>
+            <div>
+              <h3 class="project-title">作品卡片占位：前端＋狗狗資料整合專案</h3>
+              <p class="project-meta">Project Slot · 個人練習／Side Project 示意</p>
+              <p class="project-desc">
+                這裡可以用來展示你如何把前端技術與收容所資料結合，像是做一個可以依年齡、體型、性格篩選狗狗的清單，或是以地圖／時間軸方式呈現故事。
+              </p>
+              <div class="project-footer">
+                <span>未來也可以放 API 或資料結構說明</span>
+                <span class="tag">占位 · 可刪</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <p class="muted-note">
+          <strong>替換建議：</strong> 當你準備好真實作品時，使用 Section SDD 為 Projects 區產生新的
+          <code>&lt;section id="projects" ...&gt;...&lt;/section&gt;</code>，再把整段貼上取代本區塊即可。不需要保留這些占位卡片。
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================
+         Contact 區（占位版本）
+         ======================== -->
+    <section id="contact" class="section section-contact">
+      <div class="container">
+        <header>
+          <p class="section-title">Contact</p>
+          <h2 class="section-heading">聯絡我（之後可放表單／Email／社群連結）</h2>
+          <p class="section-intro">
+            Contact 區是整個網站與外界互動的出口。未來可放聯絡表單、Email、社群媒體連結，或是給收容所與合作夥伴的專用聯絡方式。現在先用文字占位保留版面。
+          </p>
+        </header>
+
+        <div class="card contact-layout">
+          <div class="contact-lines">
+            <p>
+              在正式版本中，你可以簡短說明自己目前的身份（例如「新店收容所志工＋前端工程師」），以及希望別人如何跟你聯絡：合作專案、志工招募、捐款資訊協助整理、或是單純想了解狗狗近況。
+            </p>
+            <p>
+              如果你打算將這個網站當作「履歷＋作品集」，也可以在這裡放一句話說明你目前是否開放接案、實習或工作機會。
+            </p>
+
+            <ul class="contact-list">
+              <li><strong>Email：</strong>your.email@example.com（占位，可改）</li>
+              <li><strong>收容所相關合作：</strong>可寫「歡迎來信討論新店收容所狗狗專案」</li>
+              <li><strong>社群連結：</strong>之後可以放 IG、FB 粉專、YouTube 或其他平台</li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="placeholder-note">
+              <strong>開發者區塊說明：</strong><br>
+              ● 若未來要改成「聯絡表單」，可以在這個 column 裡放入
+              <code>&lt;form&gt;...&lt;/form&gt;</code>（依你的需求設計）。<br>
+              ● 也可以改成 QR Code 圖片＋說明文字，或分組列出不同聯絡管道。<br>
+              ● 一樣建議使用 Section SDD 為 Contact 區生成新的整段 section，然後整段覆蓋本區塊。
+            </div>
+
+            <p class="contact-helper">
+              提示：目前 Contact 區僅使用 HTML + CSS，沒有任何 JavaScript。未來若要增加互動（例如送出表單後的提醒），可以用後端或無 JS 解法（如表單服務）來整合。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================
+       版權資訊 Footer
+       ========================= -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <div>© <span>2025</span> 新店狗狗檔案館 · 收容所狗狗主題個人網站骨架</div>
+        <div>本頁為 HTML＋CSS 單頁 index.html 骨架示意，方便後續以 Prompt 自動替換各 Section。</div>
+      </div>
+
+      <div class="footer-links" aria-label="網站註記">
+        <span class="footer-link">技術限制：僅使用 HTML + CSS · 無 JavaScript</span>
+        <span class="footer-link">設計策略：Mobile-first · Dark Theme · Unsplash 圖片占位</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+
