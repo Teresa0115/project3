@@ -1,3 +1,7 @@
+/* =========================
+   聖誕紅綠風格版 style.css
+   ========================= */
+
 /* 基本設定 */
 *,
 *::before,
@@ -10,11 +14,20 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Noto Sans TC", sans-serif;
   line-height: 1.6;
-  color: #3b2b2b;
-  background: #f8f3ee;
+  color: #2f241f;
+  /* 奶油色 + 上下淡紅綠漸層，營造聖誕感 */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(182, 50, 50, 0.12),
+      transparent 25%,
+      transparent 75%,
+      rgba(22, 91, 51, 0.12)
+    ),
+    #f8f3ec;
 }
 
-/* 版面 */
+/* 容器寬度 */
 .container {
   max-width: 960px;
   padding: 1.5rem;
@@ -24,80 +37,110 @@ body {
 /* 頁首 */
 .site-header {
   text-align: center;
-  padding: 2.5rem 1.5rem 1rem;
+  padding: 2.5rem 1.5rem 1.25rem;
 }
 
 .logo {
   margin: 0;
-  font-size: 2.2rem;
-  letter-spacing: 0.1em;
+  font-size: 2.4rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b11116; /* 聖誕紅 */
 }
 
 .subtitle {
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
   font-size: 0.95rem;
-  color: #8b6b5c;
+  color: #165b33; /* 深綠 */
 }
 
-/* 卡片 */
+/* 產品卡片 */
 .product-card {
   background: #ffffff;
-  border-radius: 16px;
-  padding: 1.8rem 1.6rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-  margin-bottom: 1.8rem;
+  border-radius: 18px;
+  padding: 1.9rem 1.7rem;
+  margin-bottom: 2rem;
+  /* 柔和陰影 */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(177, 17, 22, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 右上角小聖誕裝飾 */
+.product-card::before {
+  content: "🎄";
+  position: absolute;
+  top: 0.8rem;
+  right: 1rem;
+  font-size: 1.4rem;
 }
 
 .product-card h2 {
   margin-top: 0;
   margin-bottom: 0.25rem;
+  color: #165b33;
 }
 
 .tagline {
   margin-top: 0;
-  margin-bottom: 1rem;
-  color: #b24b4b;
+  margin-bottom: 1.1rem;
+  color: #b11116;
   font-weight: 600;
 }
 
 .spec-list {
   padding-left: 1.2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.6rem;
 }
 
-/* 按鈕 */
+/* 主按鈕：紅底綠邊，聖誕氛圍 */
 .btn-primary {
   display: inline-block;
-  padding: 0.6rem 1.5rem;
+  padding: 0.7rem 1.8rem;
   border-radius: 999px;
-  background: #b63232;
+  background: #b11116;
+  border: 1px solid #165b33;
   color: #fff;
   text-decoration: none;
   font-size: 0.95rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+  transition: transform 0.1s ease, box-shadow 0.1s ease,
+    background 0.1s ease;
 }
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
-  background: #912727;
+  background: #921017;
+  box-shadow: 0 0.4rem 0.9rem rgba(177, 17, 22, 0.35);
+  transform: translateY(-1px);
 }
 
-/* 做法區塊 */
+/* 沖煮方式區塊：綠色框＋淡紅背景 */
 .how-to {
-  background: #f3e1d4;
-  border-radius: 14px;
-  padding: 1.5rem 1.4rem;
+  background: #f6e6e3;
+  border-radius: 16px;
+  padding: 1.6rem 1.5rem;
+  border: 1.5px solid rgba(22, 91, 51, 0.3);
 }
 
 .how-to h3 {
   margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: #165b33;
+}
+
+.how-to ol {
+  margin: 0;
+  padding-left: 1.3rem;
 }
 
 /* 頁尾 */
 .site-footer {
   text-align: center;
   font-size: 0.8rem;
-  color: #9a7e6a;
+  color: #6e5548;
   padding: 1.5rem 1rem 2.5rem;
+  border-top: 1px dashed rgba(177, 17, 22, 0.3);
 }
